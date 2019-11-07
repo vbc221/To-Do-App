@@ -1,0 +1,39 @@
+{%extends 'todo/base.html'%}{% block content%}
+ <div class='container'>
+   <div class='inner'>
+     <h1>To Do List</h1>
+        <div class='formCont'>
+            <form action='{% url "add" %}' method='POST' role='form'>
+                {%csrf_token%}
+                {{form.text}}
+                <button type='submit'>ADD</button>
+            </form>
+        </div>
+        <div class='buttonCont'>
+            <a href='{% url "deletecomplete" %}'><button class='delete' type='button'>DELETE COMPLETED</button></a>
+            <a href='{% url "deleteall" %}'><button class='delete' type='button'>DELETE ALL</button></a>
+        </div>
+        <div class='listCont'>
+          <ul>
+            {% for todo in todo_list %}
+                  {% if todo.complete%}
+                  <li class='complete'>
+                    {{todo.text}}
+                    
+                  </li>
+                  {% else %}
+                  <a class="anchorColor" href='{% url "complete" todo.id %}'>
+                    <li>
+                    {{todo.text}} 
+                    <!-- <a href='#'>
+                      <button type='button'>Edit</button>
+                    </a> -->
+                  </li></a>
+                  {%endif%}
+            {% endfor %}
+          </ul>
+        </div>
+        
+   </div>
+</div>
+{% endblock %}
